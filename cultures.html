@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultures of India</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables for a Themed Color Palette */
+        :root {
+            --saffron: #FF9933;
+            --white: #FFFFFF;
+            --emerald: #138808;
+            --maroon: #8B0000;
+            --gold: #FFD700;
+            --dark-charcoal: #2F4F4F;
+            --light-cream: #FDF5E6;
+            --bg-light: #FDF5E6;
+            --text-dark: #2F4F4F;
+            --text-light: #fff;
+        }
+
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Base */
+        body {
+            font-family: 'Lato', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            transition: background-color 0.5s ease;
+        }
+
+        /* Utility Class */
+        .hidden {
+            display: none;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: var(--maroon);
+            color: var(--white);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--saffron);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s, transform 0.3s;
+            position: relative;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: var(--saffron);
+            transform: scale(1.1);
+        }
+
+        /* Hero section */
+        .page-hero {
+            background: url('https://source.unsplash.com/1600x600/?indian-festival') center/cover no-repeat;
+            text-align: center;
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+        }
+
+        .page-hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            color: var(--white);
+            text-shadow: 0 6px 30px rgba(0,0,0,0.4);
+            margin-bottom: 15px;
+        }
+
+        .page-hero p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+        }
+
+        /* Sections */
+        .section {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--maroon);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: var(--gold);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .section h2:hover::after {
+            width: 100px;
+        }
+
+        .section p {
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+
+        /* States Grid */
+        .states-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            max-width: 1000px;
+            margin: 30px auto;
+        }
+
+        .states-grid a {
+            display: block;
+            background: var(--white);
+            padding: 14px;
+            text-align: center;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--dark-charcoal);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.25s;
+            border: 2px solid transparent;
+        }
+
+        .states-grid a:hover {
+            background: linear-gradient(90deg, var(--saffron), var(--emerald));
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            border: 2px solid var(--white);
+        }
+
+        /* State Detail View */
+        .state-details-container {
+            padding: 60px 20px;
+        }
+
+        .state-details-container h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--maroon);
+            margin-bottom: 20px;
+        }
+
+        .state-details-container p {
+            font-size: 1.1rem;
+            max-width: 900px;
+            margin: 0 auto 40px;
+        }
+
+        .back-button {
+            display: inline-block;
+            background: var(--maroon);
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            margin-bottom: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .back-button:hover {
+            background: var(--saffron);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .culture-section h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: var(--maroon);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 10px;
+        }
+
+        .culture-card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .culture-card {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            text-align: left;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .culture-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .culture-card h4 {
+            font-size: 1.2rem;
+            color: var(--saffron);
+            margin-bottom: 5px;
+        }
+
+        .culture-card p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 0;
+        }
+
+        .culture-card ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .culture-card li {
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .culture-card li::before {
+            content: '•';
+            color: var(--emerald);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--maroon);
+            color: var(--white);
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+<header class="site-header">
+    <div class="header-inner container">
+        <div class="logo">Bharat Darpan</div>
+        <nav>
+            <ul class="menu">
+                <li><a href="#" id="home-link">Home</a></li>
+                <li><a href="#" id="cultures-link" class="active">Cultures</a></li>
+                <li><a href="#">Cuisines</a></li>
+                <li><a href="#">Wildlife</a></li>
+                <li><a href="#">VR Tours</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<main>
+    <!-- Main States Section -->
+    <section class="page-hero cultures-hero" id="main-cultures-section">
+        <h1>Cultures Across India</h1>
+        <p>Click on any state below to explore its traditions, dances, and languages</p>
+        <div class="container">
+            <div class="states-grid" id="states-grid">
+                <a href="#" data-state="Andhra Pradesh">Andhra Pradesh</a>
+                <a href="#" data-state="Arunachal Pradesh">Arunachal Pradesh</a>
+                <a href="#" data-state="Assam">Assam</a>
+                <a href="#" data-state="Bihar">Bihar</a>
+                <a href="#" data-state="Chhattisgarh">Chhattisgarh</a>
+                <a href="#" data-state="Delhi">Delhi</a>
+                <a href="#" data-state="Goa">Goa</a>
+                <a href="#" data-state="Gujarat">Gujarat</a>
+                <a href="#" data-state="Haryana">Haryana</a>
+                <a href="#" data-state="Himachal Pradesh">Himachal Pradesh</a>
+                <a href="#" data-state="Jharkhand">Jharkhand</a>
+                <a href="#" data-state="Karnataka">Karnataka</a>
+                <a href="#" data-state="Kerala">Kerala</a>
+                <a href="#" data-state="Madhya Pradesh">Madhya Pradesh</a>
+                <a href="#" data-state="Maharashtra">Maharashtra</a>
+                <a href="#" data-state="Manipur">Manipur</a>
+                <a href="#" data-state="Meghalaya">Meghalaya</a>
+                <a href="#" data-state="Mizoram">Mizoram</a>
+                <a href="#" data-state="Nagaland">Nagaland</a>
+                <a href="#" data-state="Odisha">Odisha</a>
+                <a href="#" data-state="Punjab">Punjab</a>
+                <a href="#" data-state="Rajasthan">Rajasthan</a>
+                <a href="#" data-state="Sikkim">Sikkim</a>
+                <a href="#" data-state="Tamil Nadu">Tamil Nadu</a>
+                <a href="#" data-state="Telangana">Telangana</a>
+                <a href="#" data-state="Tripura">Tripura</a>
+                <a href="#" data-state="Uttar Pradesh">Uttar Pradesh</a>
+                <a href="#" data-state="Uttarakhand">Uttarakhand</a>
+                <a href="#" data-state="West Bengal">West Bengal</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- State Details Section (Initially Hidden) -->
+    <section class="state-details-container hidden" id="state-details-section">
+        <div class="container">
+            <a href="#" class="back-button" id="back-button">← Back to States</a>
+            <h2 id="state-name-display"></h2>
+            <p id="state-description"></p>
+
+            <div class="culture-section" id="regions-section">
+                <h3>Regions & People</h3>
+                <div class="culture-card-grid" id="regions-grid"></div>
+            </div>
+
+            <div class="culture-section" id="dances-section">
+                <h3>Dance & Performance</h3>
+                <div class="culture-card-grid" id="dances-grid"></div>
+            </div>
+
+            <div class="culture-section" id="festivals-section">
+                <h3>Festivals & Celebrations</h3>
+                <div class="culture-card-grid" id="festivals-grid"></div>
+            </div>
+
+            <div class="culture-section" id="cuisine-section">
+                <h3>Cuisine & Flavors</h3>
+                <div class="culture-card-grid" id="cuisine-grid"></div>
+            </div>
+        </div>
+    </section>
+</main>
+<footer class="site-footer">
+    <p class="legal">&copy; 2025 Bharat Darpan | Cultures</p>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const statesGrid = document.getElementById('states-grid');
+    const mainSection = document.getElementById('main-cultures-section');
+    const detailsSection = document.getElementById('state-details-section');
+    const backButton = document.getElementById('back-button');
+
+    const stateNameDisplay = document.getElementById('state-name-display');
+    const stateDescription = document.getElementById('state-description');
+    const regionsGrid = document.getElementById('regions-grid');
+    const dancesGrid = document.getElementById('dances-grid');
+    const festivalsGrid = document.getElementById('festivals-grid');
+    const cuisineGrid = document.getElementById('cuisine-grid');
+
+    // A JavaScript object acting as our data store
+    const culturalData = {
+        "Andhra Pradesh": {
+            description: "Known as the Rice Bowl of India, Andhra Pradesh has a rich cultural heritage shaped by its long coastline, river valleys, and historical empires. It's a land of ancient temples, classical art forms, and spicy, flavorful cuisine.",
+            regions: [
+                { name: "Coastal Andhra", description: "Known for its fertile rice fields and unique culinary traditions, featuring seafood and spicy curries." },
+                { name: "Rayalaseema", description: "Characterized by its rocky terrain and a more arid climate, influencing its cuisine and folk arts." }
+            ],
+            dances: [
+                { name: "Kuchipudi", description: "One of the eight major Indian classical dances, a narrative performance art known for its quick footwork and expressive gestures." },
+                { name: "Lambadi", description: "A folk dance performed by the nomadic Banjara community, known for its rhythmic steps and colorful attire." }
+            ],
+            festivals: [
+                { name: "Sankranti", description: "A harvest festival celebrated with kite flying and traditional food, marking the sun's journey to the northern hemisphere." },
+                { name: "Dasara", description: "A ten-day festival celebrated with great pomp, especially in the royal city of Vijayawada, honoring the victory of good over evil." }
+            ],
+            cuisine: [
+                { name: "Hyderabadi Biryani", description: "A world-famous rice dish, layered with marinated meat and aromatic spices." },
+                { name: "Gongura Pachadi", description: "A spicy and tangy pickle made from sorrel leaves, a staple in every household." }
+            ]
+        },
+        "Arunachal Pradesh": {
+            description: "Nestled in the Eastern Himalayas, Arunachal Pradesh is home to numerous indigenous tribes, each with its unique customs and traditions. The culture is a vibrant blend of festivals, folk dances, and intricate handicrafts.",
+            regions: [
+                { name: "Tawang", description: "Known for its stunning landscapes, ancient monasteries, and the Monpa people, with their Tibetan-Buddhist influence." },
+                { name: "Ziro Valley", description: "Home of the Apatani tribe, renowned for their sustainable agricultural practices and facial tattoos." }
+            ],
+            dances: [
+                { name: "Ponung", description: "A folk dance of the Adi tribe, performed by young girls in groups to celebrate a good harvest." },
+                { name: "Aji Lhamu", description: "A dance-drama of the Monpa tribe, featuring masks and elaborate costumes, narrating mythological stories." }
+            ],
+            festivals: [
+                { name: "Losar", description: "The Tibetan New Year festival, celebrated by the Monpa tribe with grand festivities, prayer meetings, and traditional dances." },
+                { name: "Solung", description: "A major festival of the Adi tribe, dedicated to the harvest season and the deities of prosperity." }
+            ],
+            cuisine: [
+                { name: "Thukpa", description: "A hearty noodle soup, popular in the cold regions, often served with vegetables or meat." },
+                { name: "Momos", description: "Steamed dumplings filled with minced meat or vegetables, a staple food and popular snack." }
+            ]
+        },
+        "Assam": {
+            description: "Known for its tea plantations and lush forests, Assam's culture is a fusion of indigenous traditions and influences from its surrounding regions. The state is famous for its vibrant festivals and rich textile heritage.",
+            regions: [
+                { name: "Brahmaputra Valley", description: "The fertile plains along the Brahmaputra River, the cultural heartland of Assam, known for its iconic Bihu festival." }
+            ],
+            dances: [
+                { name: "Bihu", description: "A set of joyous folk dances performed by both men and women, celebrating the Bihu festival with fast hand movements and a lively tempo." },
+                { name: "Sattriya", description: "A classical dance form that originated in the monasteries of Assam, based on the teachings of Srimanta Sankardeva." }
+            ],
+            festivals: [
+                { name: "Bihu", description: "A series of three festivals marking significant points in the agricultural calendar: Bohag Bihu (spring), Kati Bihu (autumn), and Magh Bihu (winter)." }
+            ],
+            cuisine: [
+                { name: "Masor Tenga", description: "A light and tangy fish curry, a refreshing dish served with rice." },
+                { name: "Khar", description: "A unique alkaline dish, a staple in Assamese cuisine, prepared from the ash of a banana plant." }
+            ]
+        },
+        "Bihar": {
+            description: "With a legacy that traces back to ancient empires like the Mauryas and Guptas, Bihar is a land of spiritual and cultural significance. The state is the birthplace of Buddhism and Jainism and is known for its folk traditions and festivals.",
+            regions: [
+                { name: "Mithila", description: "A historic region famous for its distinct Madhubani art, a vibrant folk painting tradition." }
+            ],
+            dances: [
+                { name: "Jat-Jatin", description: "A folk dance performed by couples, often depicting love stories and domestic life through rhythmic movements." },
+                { name: "Bidesiya", description: "A dance form that deals with social issues, performed by men who also act as women in the performance." }
+            ],
+            festivals: [
+                { name: "Chhath Puja", description: "A four-day festival dedicated to the Sun God, celebrated with immense devotion and rituals, including fasting and offering prayers at riverbanks." }
+            ],
+            cuisine: [
+                { name: "Litti Chokha", description: "A traditional dish of roasted wheat balls stuffed with spiced gram flour, served with mashed vegetables." },
+                { name: "Thekua", description: "A sweet snack made of wheat flour, jaggery, and coconut, often prepared during Chhath Puja." }
+            ]
+        },
+        "Chhattisgarh": {
+            description: "Known for its rich tribal culture and dense forests, Chhattisgarh is a state with a unique identity. Its culture is deeply rooted in its ancient rituals, vibrant folk dances, and traditional music.",
+            regions: [
+                { name: "Bastar", description: "A tribal-dominated region known for its unique art forms, festivals, and the famous Bastar Dussehra." }
+            ],
+            dances: [
+                { name: "Panthi", description: "A popular dance form of the Satnami community, performed with powerful steps and rhythmic music." },
+                { name: "Raut Nacha", description: "A folk dance of the cowherd community, performed on the occasion of Diwali to honor Lord Krishna." }
+            ],
+            festivals: [
+                { name: "Bastar Dussehra", description: "A unique 75-day festival that combines tribal rituals and traditions, celebrating the goddess Danteshwari." }
+            ],
+            cuisine: [
+                { name: "Chila", description: "A savory pancake made from rice flour, a common breakfast item." },
+                { name: "Fara", description: "Steamed rice dumplings, often seasoned with mustard seeds and spices." }
+            ]
+        },
+        "Delhi": {
+            description: "As the capital of India, Delhi is a melting pot of cultures. It reflects a blend of historical Mughal and British influences with a modern, cosmopolitan lifestyle. Its culture is a vibrant mix of arts, music, and diverse culinary traditions.",
+            regions: [
+                { name: "Old Delhi", description: "Known for its historical monuments, bustling markets, and traditional street food, reflecting its Mughal heritage." },
+                { name: "New Delhi", description: "The modern capital, characterized by its planned architecture, wide roads, and government buildings." }
+            ],
+            dances: [
+                { name: "Kathak", description: "A prominent classical dance form of North India, often practiced and performed in Delhi's cultural centers." },
+                { name: "Bhangra", description: "While not a native form, the energetic Punjabi dance is widely popular in Delhi and a staple at celebrations." }
+            ],
+            festivals: [
+                { name: "Diwali", description: "The festival of lights, celebrated with immense zeal and fireworks, symbolizing the victory of good over evil." },
+                { name: "Holi", description: "The festival of colors, celebrated with music, dancing, and throwing colored powders and water." }
+            ],
+            cuisine: [
+                { name: "Chole Bhature", description: "A classic Punjabi dish of spicy chickpea curry and fried bread, a popular street food." },
+                { name: "Paranthe", description: "A type of Indian flatbread, with a special street dedicated to it in Old Delhi, offering various stuffings." }
+            ]
+        },
+        "Goa": {
+            description: "A small state with a rich history of Portuguese influence, Goa is famous for its serene beaches, vibrant nightlife, and a unique blend of Indian and European cultures. The state is known for its distinct music, dance, and cuisine.",
+            regions: [
+                { name: "North Goa", description: "Known for its lively beaches, bustling markets, and tourist attractions." },
+                { name: "South Goa", description: "Characterized by its quiet, serene beaches, and a more laid-back atmosphere." }
+            ],
+            dances: [
+                { name: "Goff", description: "A folk dance performed by men, where they weave ropes together to create a beautiful pattern, often accompanied by traditional songs." },
+                { name: "Fugdi", description: "A dance form performed by women in a circular motion, often during festivals and religious ceremonies." }
+            ],
+            festivals: [
+                { name: "Goa Carnival", description: "A colorful and vibrant festival with parades, floats, music, and dance, celebrated before the Lenten season." },
+                { name: "Shigmo", description: "A major Hindu spring festival, celebrated with traditional folk dances and performances." }
+            ],
+            cuisine: [
+                { name: "Fish Curry Rice", description: "A staple Goan dish, a spicy and tangy fish curry served with steamed rice." },
+                { name: "Goan Vindaloo", description: "A fiery meat curry, a famous delicacy with Portuguese origins, known for its distinctive sour and spicy flavor." }
+            ]
+        },
+        "Gujarat": {
+            description: "Known for its rich business acumen and a strong cultural identity, Gujarat is a state of vibrant festivals, intricate arts, and a unique vegetarian cuisine. The state is the birthplace of Mahatma Gandhi and Sardar Vallabhbhai Patel.",
+            regions: [
+                { name: "Saurashtra", description: "A peninsula region known for its historical cities, distinct folk arts, and a more rustic lifestyle." },
+                { name: "Kutch", description: "A vast, arid region famous for its White Rann desert, intricate handicrafts, and nomadic culture." }
+            ],
+            dances: [
+                { name: "Garba", description: "A circular folk dance performed by women during Navratri, characterized by its graceful steps and rhythmic clapping." },
+                { name: "Dandiya Raas", description: "A partner dance performed with decorated sticks, a vibrant and energetic part of Navratri celebrations." }
+            ],
+            festivals: [
+                { name: "Navratri", description: "A nine-night festival dedicated to the goddess Durga, celebrated with grand Garba and Dandiya performances." },
+                { name: "Uttarayan", description: "An annual kite-flying festival, where the skies of Gujarat are filled with thousands of colorful kites." }
+            ],
+            cuisine: [
+                { name: "Dhokla", description: "A steamed, spongy savory cake, a popular breakfast and snack item." },
+                { name: "Khandvi", description: "A delicate, savory snack of rolled gram flour sheets, seasoned with mustard seeds and coconut." }
+            ]
+        },
+        "Haryana": {
+            description: "A state with a deep-rooted agricultural tradition, Haryana's culture is a reflection of its people's hard work and resilience. It is known for its folk arts, strong folk music, and a cuisine rich in dairy products.",
+            regions: [
+                { name: "Kurukshetra", description: "A region of great historical significance, the site of the Mahabharata war, and a center for pilgrimage." }
+            ],
+            dances: [
+                { name: "Dhamal", description: "An ancient folk dance performed by men, often with the sound of drums, to celebrate the harvest season." },
+                { name: "Ghoomar", description: "A graceful dance performed by women in a circular motion, a common sight during festivals and weddings." }
+            ],
+            festivals: [
+                { name: "Teej", description: "A monsoon festival dedicated to goddess Parvati, celebrated with traditional songs, swings, and vibrant attire." }
+            ],
+            cuisine: [
+                { name: "Bajra Khichdi", description: "A wholesome one-pot meal made from pearl millet, a staple in the region." },
+                { name: "Besan Masala Roti", description: "A flavorful flatbread made from gram flour and spices, often served with yogurt." }
+            ]
+        },
+        "Himachal Pradesh": {
+            description: "Nestled in the majestic Himalayas, Himachal Pradesh is a state of stunning natural beauty and a unique mountain culture. Its traditions are influenced by its rugged terrain, with a focus on folk music, dance, and handicrafts.",
+            regions: [
+                { name: "Kangra", description: "Known for its beautiful valleys, ancient temples, and the unique Kangra art style." },
+                { name: "Kullu Valley", description: "A famous tourist destination, known for its picturesque landscapes and the Kullu Dussehra festival." }
+            ],
+            dances: [
+                { name: "Nati", description: "A popular folk dance of the state, performed by large groups of people during festivals and celebrations with slow and graceful movements." },
+                { name: "Naati", description: "Similar to Nati, this dance form is a rhythmic celebration of community and nature." }
+            ],
+            festivals: [
+                { name: "Kullu Dussehra", description: "A unique version of Dussehra, celebrated for seven days with a grand procession of deities and a vibrant fair." }
+            ],
+            cuisine: [
+                { name: "Sidu", description: "A steamed bread made of wheat flour, often served with ghee or mutton curry." },
+                { name: "Dham", description: "A traditional celebratory feast, a complete meal prepared with various dishes and served on special occasions." }
+            ]
+        },
+        "Jharkhand": {
+            description: "Known as the 'Land of Forests,' Jharkhand is rich in mineral resources and a vibrant tribal culture. Its traditions are deeply connected to nature and are expressed through folk arts, music, and seasonal festivals.",
+            regions: [
+                { name: "Chotanagpur Plateau", description: "A region known for its rolling hills, waterfalls, and home to a large number of indigenous tribes." }
+            ],
+            dances: [
+                { name: "Jhumair", description: "A traditional folk dance performed in circles, often accompanied by musical instruments and songs celebrating seasonal changes." },
+                { name: "Paika", description: "A martial folk dance performed by men, a powerful display of strength and rhythm." }
+            ],
+            festivals: [
+                { name: "Sarhul", description: "A spring festival celebrated by tribal communities, honoring nature and the sal tree." }
+            ],
+            cuisine: [
+                { name: "Dhuskha", description: "A deep-fried savory pancake, a popular breakfast item and snack." },
+                { name: "Mitha Pitha", description: "A sweet rice cake, often prepared during festivals." }
+            ]
+        },
+        "Karnataka": {
+            description: "A state with a rich history of powerful dynasties, Karnataka is a land of majestic temples, vibrant art forms, and a fusion of modern and traditional cultures. It's known for its IT industry as well as its rich heritage.",
+            regions: [
+                { name: "Mysuru", description: "A historical city known for its magnificent palace, the center of the famous Mysuru Dasara festival." },
+                { name: "Coastal Karnataka", description: "A region with a distinct identity, known for its seafood, beaches, and the unique art form of Yakshagana." }
+            ],
+            dances: [
+                { name: "Yakshagana", description: "A traditional folk theater form, a blend of dance, music, dialogue, and costumes, narrating mythological stories." },
+                { name: "Dollu Kunitha", description: "A traditional drum dance performed by men in groups, a powerful and rhythmic performance." }
+            ],
+            festivals: [
+                { name: "Mysuru Dasara", description: "A grand ten-day festival celebrated with a royal procession, illuminating the Mysuru Palace in all its glory." },
+                { name: "Ugadi", description: "The New Year festival, celebrated with traditional feasts and rituals." }
+            ],
+            cuisine: [
+                { name: "Bisi Bele Bath", description: "A flavorful and spicy rice dish, a wholesome meal with vegetables and lentils." },
+                { name: "Masala Dosa", description: "A famous South Indian dish, a crispy pancake stuffed with a spiced potato filling." }
+            ]
+        },
+        "Kerala": {
+            description: "Known as 'God's Own Country,' Kerala is famous for its serene backwaters, lush green landscapes, and a distinctive culture rooted in Ayurveda, martial arts, and classical art forms.",
+            regions: [
+                { name: "Malabar", description: "The northern region with a strong Arab influence, reflected in its Mappila cuisine and architecture." },
+                { name: "Kochi-Muziris", description: "The central region, a historic trading port with a mix of Indian, Portuguese, and Dutch heritage." }
+            ],
+            dances: [
+                { name: "Kathakali", description: "A highly stylized classical dance-drama known for its elaborate costumes, vivid makeup, and dramatic facial expressions." },
+                { name: "Mohiniyattam", description: "A graceful and gentle classical dance, often performed by women, with fluid movements." }
+            ],
+            festivals: [
+                { name: "Onam", description: "A harvest festival celebrated with a grand feast (Onasadya), floral carpets (Pookalam), and boat races." },
+                { name: "Thrissur Pooram", description: "One of the largest temple festivals in Kerala, famous for its magnificent procession of elephants and fireworks." }
+            ],
+            cuisine: [
+                { name: "Appam with Stew", description: "A popular breakfast dish consisting of fluffy, bowl-shaped pancakes paired with a mild coconut-milk stew." },
+                { name: "Kerala Sadhya", description: "A traditional vegetarian feast served on a banana leaf, with over 20 different dishes." }
+            ]
+        },
+        "Madhya Pradesh": {
+            description: "Known as the 'Heart of India,' Madhya Pradesh is a land of ancient history, majestic temples, and a diverse cultural landscape. The state is home to famous dance festivals and a cuisine that reflects its agricultural roots.",
+            regions: [
+                { name: "Malwa", description: "A fertile plateau known for its ancient cities, distinct folk arts, and a gentle lifestyle." },
+                { name: "Bundelkhand", description: "A historical region with a legacy of warrior kings, known for its rugged terrain and rich folk traditions." }
+            ],
+            dances: [
+                { name: "Jawara", description: "A folk dance performed to celebrate a good harvest, a lively and energetic dance." },
+                { name: "Matki", description: "A solo dance performed by women with a pot on their head, a unique and graceful performance." }
+            ],
+            festivals: [
+                { name: "Khajuraho Dance Festival", description: "An annual festival that celebrates classical Indian dance forms, set against the backdrop of the famous Khajuraho temples." }
+            ],
+            cuisine: [
+                { name: "Dal Bafla", description: "A traditional dish similar to Dal Baati Churma, with steamed and roasted wheat balls served with lentils." },
+                { name: "Poha Jalebi", description: "A popular breakfast item, a combination of flattened rice and a sweet, pretzel-like dessert." }
+            ]
+        },
+        "Maharashtra": {
+            description: "The economic powerhouse of India, Maharashtra is a state of contrast, with bustling modern cities and ancient traditions. It's a land of rich Maratha history, vibrant folk arts, and a diverse culinary heritage.",
+            regions: [
+                { name: "Vidarbha", description: "A historical region known for its cotton and orange cultivation, with a distinct cultural identity." },
+                { name: "Konkan", description: "The coastal region known for its beautiful beaches, delicious seafood, and unique Konkani cuisine." }
+            ],
+            dances: [
+                { name: "Lavani", description: "A traditional folk dance form that combines dance, music, and song, often performed by women with a vibrant and rhythmic flair." },
+                { name: "Koli Dance", description: "A folk dance of the fishing community, performed with energetic movements depicting their daily lives." }
+            ],
+            festivals: [
+                { name: "Ganesh Chaturthi", description: "A grand festival celebrating the birth of Lord Ganesha, with public processions and elaborate decorations." },
+                { name: "Gudi Padwa", description: "The New Year festival, celebrated with a special `Gudi` flag, symbolizing new beginnings." }
+            ],
+            cuisine: [
+                { name: "Vada Pav", description: "A popular street food of Mumbai, a deep-fried potato patty served in a bread bun." },
+                { name: "Misal Pav", description: "A spicy curry of sprouted lentils, topped with farsan and served with bread rolls." }
+            ]
+        },
+        "Manipur": {
+            description: "A jewel of Northeast India, Manipur is a state of stunning natural beauty, with a culture deeply rooted in its ancient traditions. It is the home of the classical Manipuri dance and is known for its intricate handicrafts and martial arts.",
+            regions: [
+                { name: "Imphal Valley", description: "The heartland of Manipur, with a dense population and the center of its cultural activities." }
+            ],
+            dances: [
+                { name: "Manipuri Raas Leela", description: "A graceful classical dance form, depicting the love story of Radha and Krishna." },
+                { name: "Thang-Ta", description: "An ancient Manipuri martial art form, a powerful display of combat techniques and rhythmic movements." }
+            ],
+            festivals: [
+                { name: "Lai Haraoba", description: "A traditional festival celebrating the creation of the universe, with ritual dances and songs." },
+                { name: "Sangai Festival", description: "An annual cultural festival that showcases the rich traditions and art forms of Manipur." }
+            ],
+            cuisine: [
+                { name: "Eromba", description: "A spicy and tangy dish made of boiled vegetables and fermented fish." },
+                { name: "Singju", description: "A unique salad of various herbs and vegetables, a popular snack." }
+            ]
+        },
+        "Meghalaya": {
+            description: "Known as the 'Abode of Clouds,' Meghalaya is a state of stunning waterfalls, lush green hills, and a unique tribal culture. Its traditions are deeply connected to nature and its people are known for their hospitality.",
+            regions: [
+                { name: "Khasi Hills", description: "The most populated region, home to the Khasi tribe, with their unique customs and matrilineal society." },
+                { name: "Garo Hills", description: "Home to the Garo tribe, known for their distinct art forms and the Wangala festival." }
+            ],
+            dances: [
+                { name: "Nongkrem", description: "A religious folk dance of the Khasi tribe, performed by both men and women to honor the deity." },
+                { name: "Wangala", description: "A traditional harvest festival dance of the Garo tribe, performed with drums and costumes." }
+            ],
+            festivals: [
+                { name: "Wangala", description: "A famous harvest festival of the Garo tribe, a hundred-drum festival that marks the end of the agricultural season." }
+            ],
+            cuisine: [
+                { name: "Jadoh", description: "A local rice dish cooked with meat and spices, a popular delicacy." },
+                { name: "Doh-Khlieh", description: "A traditional salad of boiled pork and onions, a common dish in the region." }
+            ]
+        },
+        "Mizoram": {
+            description: "A small, hilly state in Northeast India, Mizoram is known for its beautiful landscapes and its distinct Mizo culture. The people are known for their love of music, dance, and vibrant festivals.",
+            regions: [
+                { name: "Mizo Hills", description: "The mountainous region that dominates the state, home to the Mizo people." }
+            ],
+            dances: [
+                { name: "Cheraw", description: "A famous bamboo dance, performed by women with bamboo sticks, a mesmerizing and rhythmic performance." },
+                { name: "Chheih Lam", description: "A traditional dance performed to celebrate victories, with men and women dancing together to the beat of drums." }
+            ],
+            festivals: [
+                { name: "Chapchar Kut", description: "A major spring festival, celebrated with traditional dances and music, marking the end of the winter season." }
+            ],
+            cuisine: [
+                { name: "Bai", description: "A traditional dish of boiled vegetables, a staple food in the region." },
+                { name: "Misa Mach Poora", description: "A delicious dish of grilled shrimps, a popular seafood delicacy." }
+            ]
+        },
+        "Nagaland": {
+            description: "A land of diverse tribes, Nagaland is a state with a rich cultural tapestry. Each tribe has its unique customs, traditions, and festivals. The state is known for its intricate handicrafts and the famous Hornbill Festival.",
+            regions: [
+                { name: "Naga Hills", description: "The mountainous region that defines the state, home to various Naga tribes." }
+            ],
+            dances: [
+                { name: "Zeliang", description: "A set of traditional dances of the Zeliang tribe, a combination of rhythmic movements and songs." },
+                { name: "Chang Lo", description: "A traditional dance of the Chang tribe, performed by men to celebrate victory in war." }
+            ],
+            festivals: [
+                { name: "Hornbill Festival", description: "A grand annual festival that brings together all the tribes of Nagaland, showcasing their unique traditions, art forms, and cuisine." }
+            ],
+            cuisine: [
+                { name: "Smoked Pork", description: "A popular dish, with smoked pork cooked with bamboo shoots and local spices." },
+                { name: "Axone", description: "A fermented soybean dish, a unique and popular delicacy with a strong aroma." }
+            ]
+        },
+        "Odisha": {
+            description: "Known as the 'Land of Temples,' Odisha is a state with a glorious past, rich in art, architecture, and a deep-rooted spiritual culture. It is the home of the classical dance form of Odissi and is famous for its religious festivals.",
+            regions: [
+                { name: "Coastal Odisha", description: "The region along the coastline, home to the famous Puri and Konark temples." }
+            ],
+            dances: [
+                { name: "Odissi", description: "One of the eight major Indian classical dances, known for its graceful and sculptural movements." },
+                { name: "Gotipua", description: "A traditional dance form performed by young boys dressed as women, a precursor to Odissi." }
+            ],
+            festivals: [
+                { name: "Ratha Yatra", description: "A grand chariot festival of Lord Jagannath in Puri, attracting millions of devotees from around the world." },
+                { name: "Raja Parba", description: "A three-day festival celebrating womanhood and the onset of the monsoon season." }
+            ],
+            cuisine: [
+                { name: "Pakhala Bhata", description: "A traditional rice dish, with rice soaked in water, a cooling and refreshing meal." },
+                { name: "Chenna Poda", description: "A traditional sweet dish made from cheese, baked to perfection, a famous delicacy." }
+            ]
+        },
+        "Punjab": {
+            description: "The land of five rivers, Punjab has a rich cultural heritage of folk dances, vibrant music, and a hearty, butter-rich cuisine. Its culture is a reflection of its warmth, hospitality, and a love for celebrations.",
+            regions: [
+                { name: "Majha", description: "The heartland of Punjab, known for its historical and cultural significance, with cities like Amritsar." },
+                { name: "Malwa", description: "A predominantly agricultural region, known for its robust folk traditions and dialects." }
+            ],
+            dances: [
+                { name: "Bhangra", description: "An energetic and exuberant folk dance, often performed by men during harvest season, celebrating joy and triumph." },
+                { name: "Gidda", description: "A lively and graceful folk dance performed by women, accompanied by traditional folk songs and clapping." }
+            ],
+            festivals: [
+                { name: "Vaisakhi", description: "A spring harvest festival that marks the beginning of the new year and the establishment of the Khalsa Panth." },
+                { name: "Lohri", description: "A popular winter festival celebrated with bonfires, singing, and dancing, symbolizing the passing of the winter solstice." }
+            ],
+            cuisine: [
+                { name: "Sarson ka Saag", description: "A winter delicacy made from mustard greens, served with Makki di Roti (maize bread) and a generous dollop of butter." },
+                { name: "Amritsari Kulcha", description: "A crispy, stuffed flatbread served with chole (chickpea curry), a famous street food." }
+            ]
+        },
+        "Rajasthan": {
+            description: "A land of kings, Rajasthan is a vibrant desert state known for its majestic forts, intricate palaces, and a rich legacy of folk music and dance. Its culture is a reflection of its royal history and resilient people.",
+            regions: [
+                { name: "Marwar", description: "Encompassing the Thar Desert, this region is known for its warrior heritage, unique architecture, and vibrant textiles." },
+                { name: "Mewar", description: "A historic region with a legacy of fierce independence, famous for its grand forts and lakes." },
+                { name: "Shekhawati", description: "Often called the 'open-air art gallery of Rajasthan' due to its beautifully painted havelis (mansions)." }
+            ],
+            dances: [
+                { name: "Ghoomar", description: "A traditional folk dance performed by veiled women, known for its graceful pirouettes and swirling movements." },
+                { name: "Kalbelia", description: "A mesmerizing dance performed by the 'snake charmer' community, recognized by UNESCO for its cultural significance." }
+            ],
+            festivals: [
+                { name: "Pushkar Camel Fair", description: "A spectacular livestock fair and cultural festival that draws thousands of visitors." },
+                { name: "Teej", description: "A festival of swings celebrating the arrival of the monsoon, with women dressed in vibrant clothes." }
+            ],
+            cuisine: [
+                { name: "Dal Baati Churma", description: "A signature Rajasthani dish consisting of lentils (dal), baked wheat balls (baati), and a sweet crumbly dessert (churma)." },
+                { name: "Laal Maas", description: "A fiery red mutton curry, a favorite among meat lovers." }
+            ]
+        },
+        "Sikkim": {
+            description: "A small Himalayan state, Sikkim is known for its pristine natural beauty, majestic mountains, and a peaceful, Buddhist-influenced culture. The state is a hub for adventure and a haven for nature lovers.",
+            regions: [
+                { name: "Gangtok", description: "The capital city and a major tourist hub, offering stunning views and a mix of modern and traditional culture." }
+            ],
+            dances: [
+                { name: "Singhi Chham", description: "A traditional mask dance, depicting the mythical snow lion, the emblem of the state." },
+                { name: "Maruni", description: "A traditional dance of the Limbu community, performed to celebrate joyous occasions." }
+            ],
+            festivals: [
+                { name: "Losar", description: "The Tibetan New Year festival, celebrated with traditional dances and rituals to ward off evil spirits." },
+                { name: "Saga Dawa", description: "A Buddhist festival that celebrates the birth, enlightenment, and death of Lord Buddha." }
+            ],
+            cuisine: [
+                { name: "Momo", description: "Steamed dumplings filled with minced meat or vegetables, a popular dish in the region." },
+                { name: "Thukpa", description: "A hearty noodle soup, a common meal in the cold weather." }
+            ]
+        },
+        "Tamil Nadu": {
+            description: "A state with a rich legacy of ancient Dravidian culture, Tamil Nadu is known for its majestic temples, classical art forms, and a deep-rooted reverence for its language and traditions. Its culture is a vibrant blend of art, religion, and philosophy.",
+            regions: [
+                { name: "Kongu Nadu", description: "A historical region with a strong agricultural base, known for its distinct culinary traditions." },
+                { name: "Chettinad", description: "A region known for its elaborate mansions and the fiery, aromatic Chettinad cuisine." }
+            ],
+            dances: [
+                { name: "Bharatanatyam", description: "One of the oldest classical dance forms, known for its graceful movements, expressive gestures, and rhythmic footwork." },
+                { name: "Karagam", description: "A folk dance performed with a pot on the head, a vibrant and energetic performance." }
+            ],
+            festivals: [
+                { name: "Pongal", description: "A four-day harvest festival, a joyous celebration of the sun, cattle, and a new harvest." },
+                { name: "Mahamaham", description: "A grand festival celebrated once in 12 years at the Mahamaham Tank in Kumbakonam." }
+            ],
+            cuisine: [
+                { name: "Idli", description: "A soft, fluffy steamed rice cake, a staple breakfast item in the region." },
+                { name: "Dosa", description: "A crispy, savory pancake made from fermented rice and lentil batter, often served with chutney and sambar." }
+            ]
+        },
+        "Telangana": {
+            description: "A newly formed state with a unique cultural identity, Telangana is a land of historical forts, ancient temples, and a vibrant arts scene. The culture is a fusion of its own traditions with influences from its neighboring states.",
+            regions: [
+                { name: "Hyderabad", description: "The capital city and a major hub, known for its historical monuments and unique Hyderabadi cuisine." }
+            ],
+            dances: [
+                { name: "Perini Shivathandavam", description: "A vigorous male dance form, performed with great energy and a sense of devotion." },
+                { name: "Bonalu", description: "A folk dance performed by women during the Bonalu festival, a celebration of the goddess." }
+            ],
+            festivals: [
+                { name: "Bathukamma", description: "A unique floral festival, where women arrange flowers in a cone-like shape and sing folk songs." }
+            ],
+            cuisine: [
+                { name: "Biryani", description: "A world-famous rice dish, a signature delicacy of Hyderabad, known for its aromatic spices and rich flavors." },
+                { name: "Mirchi ka Salan", description: "A spicy chili curry, a popular accompaniment to Hyderabadi Biryani." }
+            ]
+        },
+        "Tripura": {
+            description: "A small state in Northeast India, Tripura is a land of rolling hills, ancient temples, and a rich tribal culture. The state is known for its bamboo and cane handicrafts and its unique folk traditions.",
+            regions: [
+                { name: "Tripura Hills", description: "The hilly region that dominates the state, home to a number of indigenous tribes." }
+            ],
+            dances: [
+                { name: "Hojagiri", description: "A dance form of the Reang community, performed by young girls on a mat with rhythmic movements." },
+                { name: "Garia", description: "A folk dance performed during the Garia Puja festival, celebrating a good harvest." }
+            ],
+            festivals: [
+                { name: "Garia Puja", description: "A major festival of the state, a celebration of the harvest season with traditional rituals and dances." }
+            ],
+            cuisine: [
+                { name: "Berma", description: "A traditional dish of fermented fish, a popular and essential ingredient in the local cuisine." },
+                { name: "Chakhwi", description: "A traditional dish of bamboo shoots, a common meal in the region." }
+            ]
+        },
+        "Uttar Pradesh": {
+            description: "A state with a deep historical and spiritual legacy, Uttar Pradesh is the land of ancient temples, grand monuments, and a vibrant cultural heritage. It is the birthplace of Lord Rama and Krishna and a hub of classical arts.",
+            regions: [
+                { name: "Awadh", description: "A historical region known for its sophisticated culture, elegant Urdu poetry, and the famous Awadhi cuisine." },
+                { name: "Braj", description: "A region of spiritual significance, the home of Lord Krishna, with its unique folk traditions and festivals." }
+            ],
+            dances: [
+                { name: "Kathak", description: "A major classical dance form, known for its intricate footwork, graceful turns, and expressive storytelling." },
+                { name: "Charkula", description: "A folk dance of the Braj region, where women dance with a lamp on their head, a beautiful and rhythmic performance." }
+            ],
+            festivals: [
+                { name: "Kumbh Mela", description: "A major Hindu pilgrimage, a gathering of millions of devotees, a spectacle of faith and devotion." },
+                { name: "Diwali", description: "The festival of lights, celebrated with great pomp and show, a major festival in the state." }
+            ],
+            cuisine: [
+                { name: "Awadhi Biryani", description: "A fragrant and flavorful rice dish, a signature delicacy of Awadh, known for its subtle flavors and tender meat." },
+                { name: "Tunday Kebab", description: "A famous kebab of Lucknow, known for its melt-in-the-mouth texture and rich spices." }
+            ]
+        },
+        "Uttarakhand": {
+            description: "A state of breathtaking natural beauty, Uttarakhand is a land of majestic mountains, holy rivers, and ancient temples. Its culture is deeply influenced by its spiritual heritage and its people are known for their simplicity and hospitality.",
+            regions: [
+                { name: "Garhwal", description: "A mountainous region with a distinct cultural identity, known for its rugged terrain and scenic beauty." },
+                { name: "Kumaon", description: "A region known for its serene lakes, ancient temples, and a peaceful atmosphere." }
+            ],
+            dances: [
+                { name: "Choliya", description: "A traditional sword dance, a powerful and energetic performance, often seen at weddings and festivals." },
+                { name: "Jhora", description: "A folk dance performed by men and women in a circle, a simple and rhythmic dance form." }
+            ],
+            festivals: [
+                { name: "Kumbh Mela", description: "A major Hindu pilgrimage, a gathering of millions of devotees, a spectacle of faith and devotion." },
+                { name: "Nanda Devi Raj Jat", description: "A pilgrimage festival that takes place once every 12 years, a journey to the abode of goddess Nanda Devi." }
+            ],
+            cuisine: [
+                { name: "Garhwal ka Fannah", description: "A traditional dish of black beans, a wholesome and nutritious meal." },
+                { name: "Kafuli", description: "A traditional dish of spinach and fenugreek leaves, a popular dish in the region." }
+            ]
+        },
+        "West Bengal": {
+            description: "A state with a deep intellectual and artistic legacy, West Bengal is a land of poets, philosophers, and revolutionaries. Its culture is known for its love of art, literature, music, and the grand festival of Durga Puja.",
+            regions: [
+                { name: "Jalpaiguri", description: "The northern region of West Bengal, known for its tea plantations and lush forests." },
+                { name: "Sundarbans", description: "The southern region, home to the largest mangrove forest and the Royal Bengal Tiger." }
+            ],
+            dances: [
+                { name: "Chhau", description: "A semi-classical dance form, a powerful and acrobatic performance, with masks and costumes." },
+                { name: "Gambhira", description: "A traditional dance form performed in a theatrical style, narrating stories and social issues." }
+            ],
+            festivals: [
+                { name: "Durga Puja", description: "A grand festival celebrating the goddess Durga, with elaborate decorations and cultural events." },
+                { name: "Pohela Boishakh", description: "The Bengali New Year festival, a celebration of new beginnings and traditions." }
+            ],
+            cuisine: [
+                { name: "Shorshe Ilish", description: "A traditional fish curry cooked with mustard paste, a signature delicacy of Bengal." },
+                { name: "Rosogolla", description: "A famous sweet dish of Bengal, a spongy cheese ball soaked in sugar syrup." }
+            ]
+        }
+    };
+
+    function renderStateDetails(stateName) {
+        const stateData = culturalData[stateName];
+        if (!stateData) {
+            // Handle case for states without data
+            stateNameDisplay.textContent = stateName;
+            stateDescription.textContent = "Data for this state is not yet available. Please check back later!";
+            regionsGrid.innerHTML = '';
+            dancesGrid.innerHTML = '';
+            festivalsGrid.innerHTML = '';
+            cuisineGrid.innerHTML = '';
+            return;
+        }
+
+        stateNameDisplay.textContent = stateName;
+        stateDescription.textContent = stateData.description;
+
+        // Function to create a culture card
+        const createCard = (title, content) => {
+            return `
+                <div class="culture-card">
+                    <h4>${title}</h4>
+                    <p>${content}</p>
+                </div>
+            `;
+        };
+
+        // Render Regions
+        regionsGrid.innerHTML = stateData.regions.map(region => createCard(region.name, region.description)).join('');
+
+        // Render Dances
+        dancesGrid.innerHTML = stateData.dances.map(dance => createCard(dance.name, dance.description)).join('');
+
+        // Render Festivals
+        festivalsGrid.innerHTML = stateData.festivals.map(festival => createCard(festival.name, festival.description)).join('');
+
+        // Render Cuisine
+        cuisineGrid.innerHTML = stateData.cuisine.map(dish => createCard(dish.name, dish.description)).join('');
+
+        // Show/Hide relevant sections based on data
+        document.getElementById('regions-section').classList.toggle('hidden', stateData.regions.length === 0);
+        document.getElementById('dances-section').classList.toggle('hidden', stateData.dances.length === 0);
+        document.getElementById('festivals-section').classList.toggle('hidden', stateData.festivals.length === 0);
+        document.getElementById('cuisine-section').classList.toggle('hidden', stateData.cuisine.length === 0);
+    }
+
+    // Event listener for state links
+    statesGrid.addEventListener('click', (e) => {
+        e.preventDefault();
+        const clickedLink = e.target.closest('a');
+        if (clickedLink && clickedLink.dataset.state) {
+            const stateName = clickedLink.dataset.state;
+            renderStateDetails(stateName);
+            mainSection.classList.add('hidden');
+            detailsSection.classList.remove('hidden');
+            window.scrollTo(0, 0); // Scroll to the top of the new section
+        }
+    });
+
+    // Event listener for the back button
+    backButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        mainSection.classList.remove('hidden');
+        detailsSection.classList.add('hidden');
+    });
+
+});
+</script>
+</body>
+</html>

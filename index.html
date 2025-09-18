@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Bharat Darpan — The Digital Odyssey</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Leaflet (map) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4sR8L7K5+d5S4FfI1Z5B7b6x7W6jD6u6Z5x5n5x5s=" crossorigin="" />
+    
+    <style>
+        /* CSS Variables for a Themed Color Palette */
+        :root {
+            --saffron: #FF9933;
+            --white: #FFFFFF;
+            --emerald: #138808;
+            --maroon: #8B0000;
+            --gold: #FFD700;
+            --dark-charcoal: #2F4F4F;
+            --light-cream: #FDF5E6;
+        }
+
+        /* Base & Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: var(--light-cream);
+            color: var(--dark-charcoal);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .site-header {
+            background: var(--maroon);
+            color: var(--white);
+            padding: 15px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--saffron);
+        }
+
+        .tag {
+            font-size: 0.8rem;
+            color: var(--white);
+            opacity: 0.8;
+        }
+
+        .primary-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .primary-nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 700;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .primary-nav a:hover {
+            color: var(--saffron);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: var(--maroon);
+            min-width: 160px;
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            padding: 10px 0;
+            border-radius: 8px;
+            margin-top: 5px;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: var(--white);
+            padding: 12px 16px;
+            display: block;
+            text-align: left;
+            transition: background 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* HERO section */
+        .hero {
+            background: url('https://source.unsplash.com/1600x900/?indian-temple,culture') center/cover no-repeat;
+            text-align: center;
+            padding: 120px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
+            color: var(--white);
+            transition: transform 0.3s ease;
+        }
+
+        /* The "Smoke" or "Shimmer" animation effect on hover */
+        .hero-title:hover {
+            transform: scale(1.05) rotate(-1deg);
+            background: linear-gradient(90deg, var(--saffron), var(--white), var(--emerald));
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: tricolor-shimmer 6s linear infinite;
+        }
+
+        @keyframes tricolor-shimmer {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        .lead {
+            font-size: 1.2rem;
+            color: var(--white);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-ctas {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn.primary {
+            background: var(--saffron);
+            color: var(--white);
+        }
+
+        .btn.ghost {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        /* Sections */
+        .section {
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .section.alt {
+            background: var(--light-cream);
+        }
+
+        h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--maroon);
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: var(--gold);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        h2:hover::after {
+            width: 100px;
+        }
+
+        .muted {
+            opacity: 0.7;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Map Section */
+        .map-controls {
+            margin: 30px 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        #leaflet-map {
+            height: 600px;
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Styling for the map GeoJSON polygons */
+        .state-polygon {
+            fillColor: var(--emerald);
+            weight: 1;
+            opacity: 1;
+            color: var(--white);
+            dashArray: '3';
+            fillOpacity: 0.7;
+        }
+        
+        .state-polygon.hovered {
+            weight: 3;
+            color: var(--white);
+            fillOpacity: 0.9;
+            fillColor: var(--saffron);
+        }
+
+        /* Details Panel */
+        #details-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 90%;
+            max-width: 800px;
+            background-color: var(--light-cream);
+            border: 2px solid var(--maroon);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        #details-panel.is-visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1500;
+            display: none;
+        }
+
+        .modal-backdrop.is-visible {
+            display: block;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--maroon);
+        }
+
+        .details-content h3 {
+            margin-top: 0;
+            color: var(--maroon);
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            font-size: 2.2rem;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+        }
+        .details-content h4 {
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--saffron);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .details-content p, .details-content ul {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        .details-content ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        .details-content li strong {
+            color: var(--maroon);
+        }
+
+        @media (max-width: 768px) {
+            #details-panel {
+                width: 95%;
+                padding: 20px;
+            }
+        }
+        
+        .legend {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            font-size: 0.9rem;
+        }
+        
+        .swatch {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-right: 5px;
+            border: 1px solid rgba(0,0,0,0.2);
+        }
+        
+        .swatch.classical { background-color: #f7a833; }
+        .swatch.folk { background-color: #8b2a2a; }
+        .swatch.tribal { background-color: #228b22; }
+
+        /* Cards & Gallery */
+        .card-grid, .gallery, .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .card, .gallery-item {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .card:hover, .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .card img, .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover img, .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .card-content {
+            padding: 20px;
+            text-align: left;
+        }
+
+        .card-content h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--maroon);
+            margin-bottom: 10px;
+        }
+
+        .card-content p {
+            font-size: 0.95rem;
+            color: var(--dark-charcoal);
+        }
+
+        /* Footer */
+        .site-footer {
+            background: var(--maroon);
+            color: var(--white);
+            padding: 40px 20px 20px;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: left;
+        }
+        
+        .footer-grid h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--saffron);
+        }
+        
+        .footer-grid p {
+            font-size: 0.9rem;
+        }
+
+        .social a {
+            color: var(--white);
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        .social a:hover {
+            color: var(--saffron);
+        }
+
+        .legal {
+            text-align: center;
+            font-size: 0.8rem;
+            margin-top: 40px;
+            opacity: 0.8;
+        }
+
+        #contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        #contact-form input,
+        #contact-form textarea {
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+        }
+
+        #contact-form textarea {
+            resize: vertical;
+        }
+
+        #contact-form button {
+            background: var(--gold);
+            color: var(--dark-charcoal);
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        /* Modals and Panels */
+        .modal, .compare-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s;
+        }
+
+        .modal.is-visible, .compare-panel.is-visible {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-body {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 800px;
+            width: 90%;
+            position: relative;
+        }
+
+        .modal-close, .compare-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            border: none;
+            background: transparent;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-charcoal);
+        }
+    </style>
+</head>
+<body>
+<header class="site-header">
+    <div class="container header-inner">
+        <div class="brand">
+            <div class="logo">Bharat Darpan</div>
+            <div class="tag">The Digital Odyssey — Interactive Cultural Atlas of India</div>
+        </div>
+        <nav class="primary-nav" aria-label="Main navigation">
+            <button class="menu-toggle" aria-expanded="false" aria-controls="main-menu">☰</button>
+            <ul id="main-menu" class="menu">
+                <li><a href="cultures.html">Cultures</a></li>
+                <li><a href="#cuisines">Cuisines</a></li>
+                <li><a href="#wildlife">Wildlife</a></li>
+                <li><a href="#vr">VR Tours</a></li>
+                <li class="dropdown">
+                    <a href="#heritage" aria-haspopup="true">Heritage ▾</a>
+                    <ul class="dropdown-content">
+                        <li><a href="#monuments">Monuments</a></li>
+                        <li><a href="#temples">Famous Temples</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<!-- HERO -->
+<section class="hero" id="hero">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+        <h1 class="hero-title">Explore India's Living Culture — Maps, Stories & Immersive Tours</h1>
+        <p class="lead">A dynamic, community-driven atlas: dances, dialects, festivals, cuisine trails, and VR experiences.</p>
+        <div class="hero-ctas">
+            <a class="btn primary" href="#map">Open Interactive Map</a>
+            <a class="btn ghost" href="#vr">Start a VR Tour</a>
+        </div>
+    </div>
+</section>
+<main>
+    <!-- INTERACTIVE MAP -->
+    <section id="map" class="section">
+        <div class="container">
+            <h2>Interactive Atlas</h2>
+            <p class="muted">Click on a state to explore its unique culture, heritage, and more.</p>
+            <div id="leaflet-map-container" style="position: relative;">
+                <div id="leaflet-map"></div>
+                <!-- Details Panel -->
+                <div id="details-panel" class="modal-backdrop" aria-hidden="true">
+                    <div class="modal-body" role="dialog" aria-modal="true">
+                        <button class="modal-close" aria-label="Close">✕</button>
+                        <div id="details-content"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- CULTURES SECTION -->
+    <section id="cultures" class="section">
+        <div class="container">
+            <h2>Cultures & Dances</h2>
+            <p>Dedicated pages contain short articles, 360° media and audio snippets. Click any marker on the map for quick access.</p>
+            <div class="card-grid" id="culture-cards">
+                <div class="card">
+                    <img src="https://source.unsplash.com/400x300/?odissi-dance" alt="Odissi Dance">
+                    <div class="card-content">
+                        <h3>Odissi</h3>
+                        <p>A graceful classical dance from Odisha, known for its lyrical movements and sculpturesque poses.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://source.unsplash.com/400x300/?bharatanatyam" alt="Bharatanatyam Dance">
+                    <div class="card-content">
+                        <h3>Bharatanatyam</h3>
+                        <p>An ancient and vibrant classical dance form originating from Tamil Nadu, celebrated for its geometric precision.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://source.unsplash.com/400x300/?kuchipudi-dance" alt="Kuchipudi Dance">
+                    <div class="card-content">
+                        <h3>Kuchipudi</h3>
+                        <p>A dynamic and narrative classical dance from Andhra Pradesh, distinguished by its fast footwork and expressive gestures.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- CUISINES -->
+    <section id="cuisines" class="section alt">
+        <div class="container">
+            <h2>Cuisines & Trails</h2>
+            <p>Follow ingredient-centric trails to see how foods evolve across regions.</p>
+            <div class="card-grid" id="cuisine-trails">
+                <div class="card">
+                    <img src="https://source.unsplash.com/400x300/?Indian-sweet-laddu" alt="Indian Sweets">
+                    <div class="card-content">
+                        <h3>Sweet Traditions</h3>
+                        <p>A trail of India's most cherished desserts, from North to South.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://source.unsplash.com/400x300/?indian-rice-pulao" alt="Rice-based dishes">
+                    <div class="card-content">
+                        <h3>The Rice Route</h3>
+                        <p>Explore how rice becomes the heart of dishes across diverse regions.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://source.unsplash.com/400x300/?indian-street-food-chaat" alt="Indian Street Food">
+                    <div class="card-content">
+                        <h3>Street Food Fiesta</h3>
+                        <p>A delicious and savory journey through the bustling streets of India.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- VR & IMMERSIVE -->
+    <section id="vr" class="section">
+        <div class="container">
+            <h2>Immersive VR Tours & 360° Media</h2>
+            <p>Enter full-screen VR experiences, or open the modal to view 360° embeds with captions.</p>
+            <div class="card-grid" id="vr-grid">
+                <div class="card">
+                    <img src="https://source.unsplash.com/400x300/?taj-mahal-vr" alt="Taj Mahal VR Tour">
+                    <div class="card-content">
+                        <h3>VR Tour: Taj Mahal</h3>
+                        <p>A virtual walkthrough of one of the world's most iconic monuments.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://source.unsplash.com/400x300/?jaipur-palace-360" alt="Jaipur Palace 360°">
+                    <div class="card-content">
+                        <h3>360° View: Amer Fort</h3>
+                        <p>Experience the grandeur of Rajasthan's royal heritage in a panoramic view.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://source.unsplash.com/400x300/?vr-himalayas-india" alt="Himalayas VR">
+                    <div class="card-content">
+                        <h3>VR Tour: The Himalayas</h3>
+                        <p>Float above the majestic peaks of the Indian Himalayas in a breathtaking virtual tour.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- MONUMENTS / TEMPLES (placeholders) -->
+    <section id="monuments" class="section alt">
+        <div class="container">
+            <h2>Monuments</h2>
+            <p>Hand-curated collections and user-submitted entries with moderation tools.</p>
+        </div>
+    </section>
+    <section id="temples" class="section">
+        <div class="container">
+            <h2>Famous Temples</h2>
+            <p>Stories, architecture notes, and VR walkthroughs.</p>
+        </div>
+    </section>
+    <!-- FOOTER CONTACT + SOCIAL -->
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div>
+                <h3>Bharat Darpan</h3>
+                <p>Connect. Learn. Preserve.</p>
+            </div>
+            <div>
+                <h4>Follow us</h4>
+                <nav class="social">
+                    <a href="#">Instagram</a> · <a href="#">YouTube</a> · <a href="#">Twitter</a>
+                </nav>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <form id="contact-form">
+                    <input name="name" placeholder="Your name" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <textarea name="message" placeholder="Message" rows="3" required></textarea>
+                    <button class="btn primary" type="submit">Send</button>
+                </form>
+            </div>
+        </div>
+        <div class="legal">© 2025 Bharat Darpan — Built with love for living cultures</div>
+    </footer>
+</main>
+<!-- Libraries -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20092B0C4bY437C091b65D5E7577536968B8d9a203487c6b907085c8e4e9b6a6b" crossorigin=""></script>
+
+<!-- App script -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Map Initialization ---
+        const map = L.map('leaflet-map').setView([23.5, 80], 5);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // --- Data for each state, including cultural information ---
+        const culturalData = {
+            "Andhra Pradesh": {
+                capital: "Amaravati",
+                languages: "Telugu",
+                history: "Ruled by powerful dynasties like the Satavahanas and the Vijayanagara Empire. Known for its rich history of art, trade, and spirituality.",
+                dance: "Kuchipudi (Classical), Tappeta Gullu (Folk)",
+                cuisine: "Spicy and tangy, with famous dishes like Gongura Pachadi and Hyderabadi Biryani.",
+                wildlife: "Home to the Eastern Ghats, with sanctuaries like Coringa Wildlife Sanctuary, known for saltwater crocodiles.",
+                festivals: "Ugadi, Sankranti, Visakha Utsav."
+            },
+            "Arunachal Pradesh": {
+                capital: "Itanagar",
+                languages: "English, local dialects (e.g., Nishi, Adi, Apatani)",
+                history: "Home to indigenous tribes with distinct traditions. Has a deep connection to Tibetan Buddhism and ancient animistic beliefs.",
+                dance: "Ponung, Bardo Chham, Rikhampada",
+                cuisine: "Known for rice-based dishes, smoked meat, and local fermented products like Apong (rice beer).",
+                wildlife: "Part of the Eastern Himalayas, home to the Tiger, Leopard, and Red Panda.",
+                festivals: "Solung, Losar, Dree Festival."
+            },
+            "Assam": {
+                capital: "Dispur",
+                languages: "Assamese, Bodo",
+                history: "Ruled by the Ahom dynasty for over 600 years. Famous for its tea plantations, dense forests, and riverine culture.",
+                dance: "Bihu Dance, Bagurumba, Sattriya (Classical)",
+                cuisine: "Aromatic and mild, with dishes like Maasor Tenga (sour fish curry) and Khar.",
+                wildlife: "Home to Kaziranga National Park, a UNESCO World Heritage Site, famous for its one-horned rhinoceroses.",
+                festivals: "Bihu, Ambubachi Mela."
+            },
+            "Bihar": {
+                capital: "Patna",
+                languages: "Hindi, Maithili",
+                history: "The birthplace of Buddhism and Jainism. The ancient city of Magadha was a center of power and learning.",
+                dance: "Jat-Jatin, Bidesiya, Paika",
+                cuisine: "Sattvic and diverse, with popular dishes like Litti Chokha and Thekua.",
+                wildlife: "Valmiki National Park is a key tiger reserve and a habitat for a variety of birds and mammals.",
+                festivals: "Chhath Puja, Makar Sankranti."
+            },
+            "Chhattisgarh": {
+                capital: "Raipur",
+                languages: "Chhattisgarhi, Hindi",
+                history: "Known for its rich tribal culture and ancient civilizations. It was a part of the Dakshina Kosala kingdom.",
+                dance: "Panthi, Raut Nacha, Karma",
+                cuisine: "Known for rice-based dishes, especially breads like Fara and Pithla. The food is simple and hearty.",
+                wildlife: "Dense forests and wetlands, with Indravati National Park known for its wild buffalo.",
+                festivals: "Bastar Dussehra, Madai Festival."
+            },
+            "Goa": {
+                capital: "Panaji",
+                languages: "Konkani",
+                history: "A unique blend of Indian and Portuguese cultures from centuries of colonial rule. Known for its carnivals, beaches, and historic churches.",
+                dance: "Fugdi, Dhalo, Shigmo",
+                cuisine: "Famous for seafood and Goan curries like Fish Curry Rice and Vindaloo. Use of coconut and spices is prominent.",
+                wildlife: "Bhagwan Mahavir Wildlife Sanctuary is a biodiversity hotspot with a variety of flora and fauna.",
+                festivals: "Goa Carnival, Shigmo, Ganesh Chaturthi."
+            },
+            "Gujarat": {
+                capital: "Gandhinagar",
+                languages: "Gujarati",
+                history: "Birthplace of Mahatma Gandhi. Ruled by various empires including the Mauryas and Marathas. Known for its rich maritime trade.",
+                dance: "Garba, Dandiya Raas, Bhavai",
+                cuisine: "Predominantly vegetarian, with a sweet and savory balance. Dishes include Dhokla and Thepla.",
+                wildlife: "Gir Forest National Park is the last remaining habitat of the Asiatic Lion.",
+                festivals: "Navratri, Uttarayan (Kite Festival)."
+            },
+            "Haryana": {
+                capital: "Chandigarh",
+                languages: "Hindi, Haryanvi",
+                history: "Associated with the Mahabharata. It was a key region in the early days of Indian civilization.",
+                dance: "Dhamal, Ras Leela, Ghoomar",
+                cuisine: "Dairy-rich, with dishes like Bajre ki Khichdi and Kadi Pakora. Milk and milk products are a staple.",
+                wildlife: "Kalesar National Park is a protected area for elephants, leopards, and several bird species.",
+                festivals: "Teej, Lohri, Basant Panchami."
+            },
+            "Himachal Pradesh": {
+                capital: "Shimla",
+                languages: "Hindi, Pahari",
+                history: "Known for its ancient Hindu temples and deep connections to Vedic culture. Its rugged terrain has preserved its unique traditions.",
+                dance: "Nati, Thoda, Dangi",
+                cuisine: "Simple and wholesome, with dishes like Madra and Dham. Food is often cooked with minimal oil and spices.",
+                wildlife: "Great Himalayan National Park is a UNESCO site, home to the endangered Snow Leopard and Himalayan Tahr.",
+                festivals: "Kullu Dussehra, Shivratri."
+            },
+            "Jharkhand": {
+                capital: "Ranchi",
+                languages: "Hindi, Santhali",
+                history: "Known for its indigenous tribes, Sarna religion, and beautiful folk arts and crafts. It was carved out of Bihar in 2000.",
+                dance: "Chhau, Karma, Santhali Dance",
+                cuisine: "Simple, with a focus on local grains and vegetables. Dishes include Thekua and Malpua.",
+                wildlife: "Palamau Tiger Reserve is known for its population of tigers and a variety of birds.",
+                festivals: "Sarhul, Karma."
+            },
+            "Karnataka": {
+                capital: "Bengaluru",
+                languages: "Kannada",
+                history: "Ruled by several major empires like the Chalukyas, Hoysalas, and Vijayanagara. Famous for its classical music (Carnatic).",
+                dance: "Yakshagana, Dollu Kunitha, Gaarudi Gombe",
+                cuisine: "Diverse, with dishes like Bisi Bele Bath and Masala Dosa. Rice is a staple ingredient.",
+                wildlife: "Bandipur National Park and Nagarhole National Park are famous for their tiger and elephant populations.",
+                festivals: "Mysore Dasara, Hampi Utsav."
+            },
+            "Kerala": {
+                capital: "Thiruvananthapuram",
+                languages: "Malayalam",
+                history: "Known as 'God's Own Country.' Famous for its trade with ancient civilizations and a unique matriarchal heritage in some communities.",
+                dance: "Kathakali, Mohiniyattam (Classical), Theyyam",
+                cuisine: "Rich in coconut, seafood, and spices. Popular dishes include Appam and Stew, and Puttu.",
+                wildlife: "Periyar National Park is a tiger reserve, home to wild elephants and a variety of bird species.",
+                festivals: "Onam, Thrissur Pooram."
+            },
+            "Madhya Pradesh": {
+                capital: "Bhopal",
+                languages: "Hindi",
+                history: "The 'Heart of India' with a rich history of ancient kingdoms. Famous for Khajuraho temples and the tribal arts.",
+                dance: "Gaur Maria, Matki Dance, Grida Dance",
+                cuisine: "Wide variety, with a mix of North and South Indian influences. Dishes like Dal Bafla and Poha Jalebi.",
+                wildlife: "Kanha and Bandhavgarh National Parks are famous tiger reserves.",
+                festivals: "Khajuraho Dance Festival, Tansen Sangeet Samaroh."
+            },
+            "Maharashtra": {
+                capital: "Mumbai",
+                languages: "Marathi",
+                history: "Home to the Maratha Empire. Known for the Ajanta and Ellora Caves, and a deep connection to the life of Shivaji Maharaj.",
+                dance: "Lavani, Koli Dance, Dhangari Gaja",
+                cuisine: "Varied, from spicy coastal cuisine to mild inland food. Dishes include Vada Pav and Misal Pav.",
+                wildlife: "Tadoba-Andhari Tiger Reserve is a popular destination for tiger sightings and other wildlife.",
+                festivals: "Ganesh Chaturthi, Gudi Padwa."
+            },
+            "Manipur": {
+                capital: "Imphal",
+                languages: "Manipuri",
+                history: "Known for its classical dance form Manipuri, martial arts (Thang-Ta), and the Lai Haraoba festival.",
+                dance: "Manipuri (Classical), Thang-Ta (Martial Dance)",
+                cuisine: "Unique, with a focus on rice and fermented fish. Dishes like Eromba and Chamthong.",
+                wildlife: "Keibul Lamjao National Park is the world's only floating national park, home to the endangered Sangai deer.",
+                festivals: "Yaoshang, Lai Haraoba, Ningol Chakouba."
+            },
+            "Meghalaya": {
+                capital: "Shillong",
+                languages: "English, Khasi",
+                history: "Known as the 'Abode of Clouds.' Famous for its living root bridges and rich tribal culture.",
+                dance: "Wangala, Nongkrem Dance",
+                cuisine: "Known for its rice and meat preparations, like Jadoh and Dohkhlieh. Often accompanied by fermented bamboo shoots.",
+                wildlife: "Nokrek National Park is a UNESCO Biosphere Reserve, known for its Red Panda and a variety of orchids.",
+                festivals: "Wangala, Nongkrem Festival."
+            },
+            "Mizoram": {
+                capital: "Aizawl",
+                languages: "Mizo",
+                history: "A land of hills and rivers, Mizoram has a rich tribal history and is known for its peaceful, close-knit communities.",
+                dance: "Cheraw (Bamboo Dance), Chheih Lam",
+                cuisine: "Mild and healthy, with dishes like Misa Mach Poora and Bai. Local ingredients are key.",
+                wildlife: "Blue Mountain National Park is home to a diverse range of birds and mammals, including the Tiger.",
+                festivals: "Chapchar Kut, Mim Kut."
+            },
+            "Nagaland": {
+                capital: "Kohima",
+                languages: "English, local dialects",
+                history: "Known for its indigenous tribes, each with a unique culture, language, and traditional attire. A land of warriors and headhunters.",
+                dance: "Chang Lo, Monyu Asho, Agurshik",
+                cuisine: "Famous for smoked meat and local ingredients. Dishes include Smoked Pork and Bamboo Shoot.",
+                wildlife: "Intanki National Park is home to Hoolock Gibbons, Elephants, and a variety of birds.",
+                festivals: "Hornbill Festival (a celebration of tribal culture), Moatsu."
+            },
+            "Odisha": {
+                capital: "Bhubaneswar",
+                languages: "Odia",
+                history: "Known as the 'Land of Temples.' Famous for the Konark Sun Temple and its rich maritime history.",
+                dance: "Odissi (Classical), Chhau (Folk), Gotipua",
+                cuisine: "Simple yet flavorful, with a focus on rice and seafood. Dishes like Dalma and Chhena Poda.",
+                wildlife: "Bhitarkanika National Park is a key mangrove ecosystem, famous for saltwater crocodiles and migratory birds.",
+                festivals: "Rath Yatra, Durga Puja, Konark Festival."
+            },
+            "Punjab": {
+                capital: "Chandigarh",
+                languages: "Punjabi",
+                history: "The land of the five rivers. Home of Sikhism and a rich agricultural heritage. Known for its martial spirit and hospitality.",
+                dance: "Bhangra, Gidda, Luddi",
+                cuisine: "Rich and wholesome, with dishes like Sarson da Saag, Makki di Roti, and Butter Chicken.",
+                wildlife: "Harike Wetland is a significant bird sanctuary for migratory waterfowl.",
+                festivals: "Lohri, Baisakhi, Guru Purab."
+            },
+            "Rajasthan": {
+                capital: "Jaipur",
+                languages: "Rajasthani, Hindi",
+                history: "The 'Land of Kings' is famous for its majestic forts, palaces, and a history of Rajput valor.",
+                dance: "Ghoomar, Kalbelia, Bhavai",
+                cuisine: "Known for its rich and diverse food. Dishes include Dal Baati Churma and Laal Maas.",
+                wildlife: "Ranthambore National Park is a world-renowned tiger reserve.",
+                festivals: "Teej, Pushkar Camel Fair."
+            },
+            "Sikkim": {
+                capital: "Gangtok",
+                languages: "Nepali, Sikkimese",
+                history: "A blend of Nepali, Tibetan, and Indian cultures. Known for its monasteries and breathtaking mountain landscapes.",
+                dance: "Chham, Maruni, Limboo Dance",
+                cuisine: "Influenced by Tibetan and Nepali cuisine. Dishes include Momos and Thukpa.",
+                wildlife: "Khangchendzonga National Park is a UNESCO World Heritage Site, home to the Red Panda.",
+                festivals: "Losar, Saga Dawa, Phang Lhabsol."
+            },
+            "Tamil Nadu": {
+                capital: "Chennai",
+                languages: "Tamil",
+                history: "Home to a rich and ancient civilization. Known for its stunning temple architecture and the oldest living language, Tamil.",
+                dance: "Bharatanatyam (Classical), Karakattam (Folk)",
+                cuisine: "Known for its use of rice and lentils. Popular dishes include Idli, Dosa, and Sambar.",
+                wildlife: "Mudumalai National Park is a tiger reserve and a sanctuary for elephants, gaurs, and birds.",
+                festivals: "Pongal, Tamil New Year."
+            },
+            "Telangana": {
+                capital: "Hyderabad",
+                languages: "Telugu, Urdu",
+                history: "A new state with a blend of regional cultures. Famous for the Charminar and Golconda Fort. The region was a major center for arts and literature.",
+                dance: "Perini Shivatandavam, Bonalu Dance",
+                cuisine: "Known for its spicy and tangy food, with Hyderabadi Biryani being a global favorite.",
+                wildlife: "Kawal Tiger Reserve is a protected area for tigers, leopards, and other wildlife.",
+                festivals: "Bonalu, Bathukamma."
+            },
+            "Tripura": {
+                capital: "Agartala",
+                languages: "Bengali, Kokborok",
+                history: "Known for its rich tribal traditions, dance forms, and bamboo handicrafts. It was an ancient kingdom for many centuries.",
+                dance: "Hojagiri, Garia Dance, Lebang Boomani Dance",
+                cuisine: "A simple cuisine with a focus on local ingredients. Dishes like Mui Borok (fermented fish) are common.",
+                wildlife: "Sepahijala Wildlife Sanctuary is a biodiversity hotspot with a variety of primates and birds.",
+                festivals: "Garia Puja, Kharchi Puja."
+            },
+            "Uttar Pradesh": {
+                capital: "Lucknow",
+                languages: "Hindi, Urdu",
+                history: "The most populous state. Known for the iconic Taj Mahal, the holy city of Varanasi, and a history of powerful empires.",
+                dance: "Kathak (Classical), Charkula, Ras Leela",
+                cuisine: "Known for its rich and diverse food. Dishes include Kebabs, Biryani, and traditional sweets.",
+                wildlife: "Dudhwa National Park is a tiger reserve and home to a large population of swamp deer.",
+                festivals: "Diwali, Holi, Kumbh Mela."
+            },
+            "Uttarakhand": {
+                capital: "Dehradun",
+                languages: "Hindi, Garhwali, Kumaoni",
+                history: "A Himalayan state with Hindu pilgrimage sites. Known for its folk dances and serene natural beauty.",
+                dance: "Garhwali, Kumaoni, Choliya Dance",
+                cuisine: "Simple and wholesome, with dishes like Aloo ke Gutke and Kafuli. Local grains are widely used.",
+                wildlife: "Jim Corbett National Park, the oldest national park in India, is a major tiger reserve.",
+                festivals: "Kumbh Mela, Basant Panchami."
+            },
+            "West Bengal": {
+                capital: "Kolkata",
+                languages: "Bengali",
+                history: "Known for its rich literary and artistic heritage, including the works of Rabindranath Tagore. A center of Indian nationalism.",
+                dance: "Gaudiya Nritya (Classical), Chhau (Folk), Santhali Dance",
+                cuisine: "Famous for its seafood and sweets. Dishes include Machher Jhol (fish curry) and Roshogolla.",
+                wildlife: "Sundarbans National Park is a UNESCO World Heritage Site, home to the Royal Bengal Tiger.",
+                festivals: "Durga Puja, Pohela Boishakh (Bengali New Year)."
+            }
+        };
+
+        // GeoJSON data for the states of India (simplified for single-file embedding)
+        const indiaGeoJSON = {
+            "type": "FeatureCollection",
+            "features": [
+                {"type": "Feature", "properties": {"name": "Andhra Pradesh"}, "geometry": {"type": "Polygon", "coordinates": [[[80.0,14.5],[81.0,15.0],[81.5,16.5],[82.0,17.0],[81.0,18.0],[79.5,17.5],[78.0,16.0],[78.0,14.0],[80.0,14.5]]]}},
+                {"type": "Feature", "properties": {"name": "Arunachal Pradesh"}, "geometry": {"type": "Polygon", "coordinates": [[[92.0,28.0],[94.0,29.0],[95.5,29.0],[97.0,28.0],[96.0,27.0],[94.5,27.0],[92.0,28.0]]]}},
+                {"type": "Feature", "properties": {"name": "Assam"}, "geometry": {"type": "Polygon", "coordinates": [[[90.0,26.0],[92.0,26.5],[93.0,27.0],[94.5,27.0],[95.0,26.0],[94.0,25.5],[92.0,25.0],[90.0,26.0]]]}},
+                {"type": "Feature", "properties": {"name": "Bihar"}, "geometry": {"type": "Polygon", "coordinates": [[[83.5,25.0],[85.0,25.5],[86.5,26.0],[87.5,26.5],[88.5,26.0],[87.5,25.0],[86.0,24.5],[83.5,25.0]]]}},
+                {"type": "Feature", "properties": {"name": "Chhattisgarh"}, "geometry": {"type": "Polygon", "coordinates": [[[80.5,22.0],[82.0,22.5],[83.5,23.5],[83.0,24.5],[81.5,23.5],[80.5,22.0]]]}},
+                {"type": "Feature", "properties": {"name": "Goa"}, "geometry": {"type": "Polygon", "coordinates": [[[74.0,15.5],[74.0,15.0],[73.5,15.0],[73.5,15.5],[74.0,15.5]]]}},
+                {"type": "Feature", "properties": {"name": "Gujarat"}, "geometry": {"type": "Polygon", "coordinates": [[[70.0,22.0],[72.5,23.5],[74.0,24.0],[74.0,22.5],[72.5,21.5],[70.0,22.0]]]}},
+                {"type": "Feature", "properties": {"name": "Haryana"}, "geometry": {"type": "Polygon", "coordinates": [[[75.0,29.0],[77.0,30.0],[77.5,29.5],[76.5,28.5],[75.0,29.0]]]}},
+                {"type": "Feature", "properties": {"name": "Himachal Pradesh"}, "geometry": {"type": "Polygon", "coordinates": [[[76.0,31.5],[78.0,32.5],[79.0,32.0],[78.0,31.0],[76.0,31.5]]]}},
+                {"type": "Feature", "properties": {"name": "Jharkhand"}, "geometry": {"type": "Polygon", "coordinates": [[[83.0,23.5],[84.5,24.0],[86.0,24.5],[87.0,24.0],[86.0,23.0],[84.5,22.5],[83.0,23.5]]]}},
+                {"type": "Feature", "properties": {"name": "Karnataka"}, "geometry": {"type": "Polygon", "coordinates": [[[74.0,16.5],[75.5,17.5],[77.0,17.0],[78.0,16.0],[78.0,14.0],[77.0,13.0],[76.0,12.5],[74.5,13.0],[74.0,14.5],[74.0,16.5]]]}},
+                {"type": "Feature", "properties": {"name": "Kerala"}, "geometry": {"type": "Polygon", "coordinates": [[[76.0,12.5],[76.5,12.0],[77.0,11.5],[77.5,10.5],[77.0,9.5],[76.5,8.5],[76.0,8.0],[75.5,9.0],[75.0,10.0],[75.5,11.0],[76.0,12.5]]]}},
+                {"type": "Feature", "properties": {"name": "Madhya Pradesh"}, "geometry": {"type": "Polygon", "coordinates": [[[74.0,23.0],[76.0,24.5],[77.5,25.5],[80.0,25.5],[81.5,24.5],[82.0,23.5],[81.5,22.5],[79.0,21.5],[77.0,21.0],[75.5,22.0],[74.0,23.0]]]}},
+                {"type": "Feature", "properties": {"name": "Maharashtra"}, "geometry": {"type": "Polygon", "coordinates": [[[72.5,18.0],[75.0,20.0],[76.5,21.5],[79.0,21.5],[80.0,20.5],[80.5,19.0],[79.5,18.0],[78.0,16.5],[76.0,16.0],[74.5,17.0],[72.5,18.0]]]}},
+                {"type": "Feature", "properties": {"name": "Manipur"}, "geometry": {"type": "Polygon", "coordinates": [[[93.0,25.0],[94.0,25.5],[94.5,25.0],[94.5,24.0],[93.5,23.5],[93.0,24.0],[93.0,25.0]]]}},
+                {"type": "Feature", "properties": {"name": "Meghalaya"}, "geometry": {"type": "Polygon", "coordinates": [[[90.0,25.0],[91.5,25.5],[92.0,25.0],[91.0,24.5],[90.0,25.0]]]}},
+                {"type": "Feature", "properties": {"name": "Mizoram"}, "geometry": {"type": "Polygon", "coordinates": [[[92.5,23.5],[93.0,23.0],[92.5,22.5],[92.0,22.0],[91.5,22.5],[91.5,23.0],[92.5,23.5]]]}},
+                {"type": "Feature", "properties": {"name": "Nagaland"}, "geometry": {"type": "Polygon", "coordinates": [[[94.0,26.5],[95.0,27.0],[94.5,26.5],[94.0,26.5]]]}},
+                {"type": "Feature", "properties": {"name": "Odisha"}, "geometry": {"type": "Polygon", "coordinates": [[[83.0,22.0],[84.0,22.5],[85.0,22.0],[86.0,21.5],[86.5,20.5],[86.0,19.5],[85.0,18.5],[84.0,18.0],[83.0,19.0],[83.0,22.0]]]}},
+                {"type": "Feature", "properties": {"name": "Punjab"}, "geometry": {"type": "Polygon", "coordinates": [[[74.0,30.0],[76.0,31.0],[77.0,30.5],[76.0,29.5],[74.0,30.0]]]}},
+                {"type": "Feature", "properties": {"name": "Rajasthan"}, "geometry": {"type": "Polygon", "coordinates": [[[71.0,26.0],[72.5,27.5],[74.0,28.5],[75.5,29.0],[76.5,28.0],[75.0,27.0],[74.0,26.0],[73.0,25.0],[72.0,24.0],[71.0,26.0]]]}},
+                {"type": "Feature", "properties": {"name": "Sikkim"}, "geometry": {"type": "Polygon", "coordinates": [[[88.0,27.5],[88.5,27.0],[89.0,27.5],[88.0,27.5]]]}},
+                {"type": "Feature", "properties": {"name": "Tamil Nadu"}, "geometry": {"type": "Polygon", "coordinates": [[[77.5,12.5],[78.5,12.0],[79.5,11.5],[79.0,10.0],[78.0,9.0],[77.5,8.0],[76.5,8.0],[76.0,9.0],[76.5,10.0],[77.5,12.5]]]}},
+                {"type": "Feature", "properties": {"name": "Telangana"}, "geometry": {"type": "Polygon", "coordinates": [[[77.5,18.0],[79.0,18.5],[80.0,18.0],[79.0,17.0],[78.0,16.5],[77.5,18.0]]]}},
+                {"type": "Feature", "properties": {"name": "Tripura"}, "geometry": {"type": "Polygon", "coordinates": [[[91.5,24.0],[92.0,23.5],[91.5,23.0],[91.0,23.5],[91.5,24.0]]]}},
+                {"type": "Feature", "properties": {"name": "Uttar Pradesh"}, "geometry": {"type": "Polygon", "coordinates": [[[77.0,29.0],[78.5,29.5],[80.0,29.0],[82.0,28.5],[83.5,27.5],[84.5,27.0],[83.5,26.0],[82.5,25.5],[81.0,25.0],[79.0,26.0],[78.0,27.0],[77.0,29.0]]]}},
+                {"type": "Feature", "properties": {"name": "Uttarakhand"}, "geometry": {"type": "Polygon", "coordinates": [[[77.5,31.0],[79.0,31.5],[80.5,31.0],[80.0,30.0],[78.5,29.5],[77.5,31.0]]]}},
+                {"type": "Feature", "properties": {"name": "West Bengal"}, "geometry": {"type": "Polygon", "coordinates": [[[86.5,25.0],[88.0,26.5],[89.0,26.0],[89.5,25.5],[89.0,24.5],[88.0,23.5],[87.0,22.5],[86.5,25.0]]]}}
+            ]
+        };
+
+        // --- UI & Interaction ---
+        const modal = document.getElementById('modal');
+        const modalContent = document.getElementById('modal-content');
+        const detailsPanel = document.getElementById('details-panel');
+
+        // Modal close button for the details panel
+        document.querySelector('#details-panel .modal-close').addEventListener('click', () => {
+            detailsPanel.classList.remove('is-visible');
+        });
+
+        // Click handler for all card elements
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', () => {
+                modalContent.innerHTML = `<h3 class="text-xl font-bold mb-4">Card Details</h3><p>This is a modal to display detailed information for a card. The content here would be dynamically loaded based on the card you click.</p>`;
+                modal.classList.add('is-visible');
+            });
+        });
+
+        // Close button for the generic modal
+        document.querySelector('#modal .modal-close').addEventListener('click', () => {
+            modal.classList.remove('is-visible');
+        });
+
+        // Form submission (prevents default behavior)
+        document.getElementById('contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            console.log('Form submitted!');
+            // In a real app, this would send data to a backend.
+        });
+
+        // --- Map interaction functions ---
+        function style(feature) {
+            return {
+                fillColor: 'var(--emerald)',
+                weight: 1,
+                opacity: 1,
+                color: 'var(--white)',
+                dashArray: '3',
+                fillOpacity: 0.7
+            };
+        }
+
+        // Mouseover/hover effect
+        function highlightFeature(e) {
+            const layer = e.target;
+            layer.setStyle({
+                weight: 3,
+                color: 'var(--white)',
+                dashArray: '',
+                fillOpacity: 0.9,
+                fillColor: 'var(--saffron)'
+            });
+            if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+                layer.bringToFront();
+            }
+        }
+
+        // Mouseout effect to reset the style
+        function resetHighlight(e) {
+            geojson.resetStyle(e.target);
+        }
+
+        // Click event to show the details panel
+        function onMapClick(e) {
+            const stateName = e.target.feature.properties.name;
+            const data = culturalData[stateName];
+            const contentDiv = document.getElementById('details-content');
+
+            if (data) {
+                contentDiv.innerHTML = `
+                    <h3>${stateName}</h3>
+                    <h4>Cultural Highlights</h4>
+                    <p><strong>History:</strong> ${data.history}</p>
+                    <p><strong>Dance:</strong> ${data.dance}</p>
+                    <p><strong>Languages:</strong> ${data.languages}</p>
+                    <p><strong>Cuisine:</strong> ${data.cuisine}</p>
+                    <p><strong>Wildlife:</strong> ${data.wildlife}</p>
+                    <p><strong>Festivals:</strong> ${data.festivals}</p>
+                `;
+            } else {
+                contentDiv.innerHTML = `<h3>${stateName}</h3><p>Sorry, no data available for this state yet.</p>`;
+            }
+            detailsPanel.classList.add('is-visible');
+        }
+
+        // Set up event listeners for each feature
+        function onEachFeature(feature, layer) {
+            layer.on({
+                mouseover: highlightFeature,
+                mouseout: resetHighlight,
+                click: onMapClick
+            });
+        }
+
+        // Add the GeoJSON layer to the map
+        const geojson = L.geoJSON(indiaGeoJSON, {
+            style: style,
+            onEachFeature: onEachFeature
+        }).addTo(map);
+
+        // Adjust map view to fit all features on load
+        map.fitBounds(geojson.getBounds());
+    });
+</script>
+</body>
+</html>
