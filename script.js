@@ -62,17 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         },
                         // CLICK: When a user clicks on a state.
                         click: function (e) {
-                            // Get the state's name from the GeoJSON properties.
-                            const stateName = feature.properties.ST_NM;
-                            const detailsPanel = document.getElementById('details-panel');
-                            const detailsContent = document.getElementById('details-content');
-                            
-                            // Populate the details panel with the state's name.
-                            detailsContent.innerHTML = `<h3>${stateName}</h3><p>Detailed cultural information for ${stateName} will be displayed here. You can fetch this from another data source.</p>`;
-                            
-                            // Make the details panel visible.
-                            detailsPanel.classList.remove('details-panel-hidden');
-                            detailsPanel.classList.add('is-visible');
+                            // This function is now empty, so nothing will happen on click.
                         }
                     });
                 }

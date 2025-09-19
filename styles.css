@@ -186,3 +186,15 @@ h2 {
     font-size: 0.8rem;
     opacity: 0.8;
 }
+
+/* for the transition ease out */
+#leaflet-map .leaflet-interactive {
+    /* This ensures the state scales from its center, not a corner */
+    transform-origin: center;
+
+    /* This creates the smooth 0.3-second ease-out transition for the scaling effect */
+    transition: transform 0.3s ease-out;
+}
+#leaflet-map .leaflet-interactive:hover {
+    transform: scale(1.2);
+}

@@ -3,52 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bharat Darpan — Explore the Cultures of India</title>
+    <title>Bharat Darpan — Interactive Map of India</title>
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    <!-- This now correctly links to your new, dedicated stylesheet -->
-    <link rel="stylesheet" href="cultures-styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <header class="site-header">
     <div class="container header-inner">
         <div class="logo">Bharat Darpan</div>
-        <nav>
-            <!-- This link correctly points back to your main page -->
-            <a href="index.html">Interactive Map</a>
+        <nav class="primary-nav">
+            <ul>
+                <li><a href="cultures.html">Explore Cultures</a></li>
+            </ul>
         </nav>
     </div>
 </header>
 
-<main class="container">
-
-    <!-- This section shows the grid of states to select from -->
-    <section class="page-hero" id="main-cultures-section">
-        <h1>Explore the Soul of India</h1>
-        <p class="muted">Select a state to begin your cultural odyssey.</p>
-        <div class="state-selection-grid" id="state-selection-grid">
-            <!-- State selection cards will be dynamically generated here by the script -->
-        </div>
+<main>
+    <section class="section" id="interactive-map-section">
+        <h2>An Interactive Map of India</h2>
+        <p class="muted">Hover over a state to highlight it. Click on any state to see more details.</p>
+        
+        <div id="leaflet-map"></div>
     </section>
-
-    <!-- This section is hidden by default and shows the details of a selected state -->
-    <section class="state-details-container hidden" id="state-details-section">
-        <!-- The content for the selected state will be dynamically generated here -->
-    </section>
-
 </main>
+
+<aside id="details-panel" class="details-panel-hidden">
+    <button id="close-panel-btn" class="modal-close" aria-label="Close">&times;</button>
+    <div id="details-content">
+        </div>
+</aside>
 
 <footer class="site-footer">
     <p class="legal">© 2025 Bharat Darpan — A Digital Odyssey</p>
 </footer>
 
-<!-- This now correctly links to your new, dedicated script -->
-<script src="cultures-script.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+
+<script src="script.js"></script>
+
 </body>
 </html>
-
